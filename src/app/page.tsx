@@ -14,6 +14,9 @@ export const metadata: Metadata = {
   },
   description: `Professional electrical services in ${site.city}. ${site.badges.join(", ")} (${site.license}). Specializing in residential service & repair, remodels, and new construction. Contact us for free estimates.`,
   openGraph: {
+    type: "website",
+    url: baseUrl,
+    siteName: site.name,
     title: `Home | ${site.name}`,
     description: `Professional electrical services in ${site.city}. Licensed, bonded, and insured.`,
     images: [
