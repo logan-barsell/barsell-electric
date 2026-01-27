@@ -65,6 +65,12 @@ export const metadata: Metadata = {
       },
     ],
   },
+  twitter: {
+    card: "summary_large_image",
+    title: `${site.name} | ${site.tagline}`,
+    description: `Professional electrical services in ${site.city}. ${site.badges.join(", ")}. Licensed, bonded, and insured.`,
+    images: [`${baseUrl}/og-image.png`],
+  },
   robots: {
     index: true,
     follow: true,
