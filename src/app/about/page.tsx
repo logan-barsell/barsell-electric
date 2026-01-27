@@ -1,12 +1,33 @@
 import { site } from "@/content/site";
 import type { Metadata } from "next";
 
+const baseUrl =
+  process.env.NEXT_PUBLIC_SITE_URL || "https://barsellelectrical.com";
+
+const ogTitle = `About | ${site.name}`;
+const ogDescription = `Learn about ${site.name} - ${site.tagline}. Licensed, bonded, and insured electrical services.`;
+const ogImage = `${baseUrl}/barsell-electrical-og.png`;
+
 export const metadata: Metadata = {
   title: "About",
   description: `Meet ${site.owner}, owner/operator of ${site.name}. ${site.tagline}. California state licensed (${site.license}), bonded, and insured electrician serving ${site.city}.`,
   openGraph: {
-    title: `About | ${site.name}`,
-    description: `Learn about ${site.name} - ${site.tagline}. Licensed, bonded, and insured electrical services.`,
+    title: ogTitle,
+    description: ogDescription,
+    images: [
+      {
+        url: ogImage,
+        width: 1200,
+        height: 630,
+        alt: site.name,
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: ogTitle,
+    description: ogDescription,
+    images: [ogImage],
   },
 };
 
