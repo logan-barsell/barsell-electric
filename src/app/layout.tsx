@@ -17,7 +17,8 @@ const fontAccent = Rajdhani({
   weight: ["400", "500", "600", "700"],
 });
 
-const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://barsellelectrical.com";
+const baseUrl =
+  process.env.NEXT_PUBLIC_SITE_URL || "https://barsellelectrical.com";
 
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
@@ -57,7 +58,7 @@ export const metadata: Metadata = {
     description: `Professional electrical services in ${site.city}. ${site.badges.join(", ")}. Licensed, bonded, and insured.`,
     images: [
       {
-        url: `${baseUrl}/brand/logo-full.jpg`,
+        url: `${baseUrl}/og-image.png`,
         width: 1200,
         height: 630,
         alt: site.name,
@@ -82,7 +83,11 @@ export const metadata: Metadata = {
       { url: "/favicons/favicon.ico", sizes: "any" },
     ],
     apple: [
-      { url: "/favicons/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+      {
+        url: "/favicons/apple-touch-icon.png",
+        sizes: "180x180",
+        type: "image/png",
+      },
     ],
   },
   manifest: "/favicons/site.webmanifest",
@@ -100,8 +105,18 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <link rel="icon" href="/favicons/favicon.ico" sizes="any" />
-        <link rel="icon" href="/favicons/favicon-16x16.png" type="image/png" sizes="16x16" />
-        <link rel="icon" href="/favicons/favicon-32x32.png" type="image/png" sizes="32x32" />
+        <link
+          rel="icon"
+          href="/favicons/favicon-16x16.png"
+          type="image/png"
+          sizes="16x16"
+        />
+        <link
+          rel="icon"
+          href="/favicons/favicon-32x32.png"
+          type="image/png"
+          sizes="32x32"
+        />
         <link rel="apple-touch-icon" href="/favicons/apple-touch-icon.png" />
         <link rel="manifest" href="/favicons/site.webmanifest" />
       </head>
