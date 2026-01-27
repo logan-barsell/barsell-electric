@@ -1,36 +1,79 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Barsell Electrical Services
+
+Professional electrical services website for Barsell Electrical Services, serving the East Bay Area.
+
+## Tech Stack
+
+- **Next.js 16** - React framework with App Router
+- **TypeScript** - Type safety
+- **Tailwind CSS v4** - Styling
+- **React Icons** - Icon library
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js 18+ 
+- npm, yarn, pnpm, or bun
+
+### Installation
+
+```bash
+npm install
+```
+
+### Development
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to view the site.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Build
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+```
 
-## Learn More
+This creates a static export in the `out/` directory, ready for deployment to any static hosting service.
 
-To learn more about Next.js, take a look at the following resources:
+## Deployment
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+This site is configured for static export and can be deployed to:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **Digital Ocean** (nginx static hosting)
+- **Vercel** (recommended for Next.js)
+- **Netlify**
+- **Any static hosting service**
 
-## Deploy on Vercel
+### Environment Variables
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Set `NEXT_PUBLIC_SITE_URL` to your production domain (e.g., `https://barsellelectrical.com`) for proper metadata and sitemap generation.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Project Structure
+
+```
+src/
+├── app/              # Next.js App Router pages
+│   ├── about/       # About page
+│   ├── contact/     # Contact page
+│   ├── reviews/     # Reviews page
+│   └── services/    # Services page
+├── components/       # React components
+├── content/          # Site content and data
+└── lib/             # Utility functions
+```
+
+## Features
+
+- ✅ Responsive design (mobile-first)
+- ✅ SEO optimized (metadata, sitemap, robots.txt)
+- ✅ Touch device detection
+- ✅ Accessible navigation
+- ✅ Error pages (404, 500)
+- ✅ Favicon and app icons
+
+## License
+
+© 2025 Barsell Electrical Services. All rights reserved.
