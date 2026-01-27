@@ -4,12 +4,14 @@ import type { Metadata } from "next";
 const baseUrl =
   process.env.NEXT_PUBLIC_SITE_URL || "https://barsellelectrical.com";
 
-const ogTitle = `${site.name} - About`;
+const ogTitle = `About | ${site.name}`;
 const ogDescription = `Learn about ${site.name} - ${site.tagline}. Licensed, bonded, and insured electrical services.`;
 const ogImage = `${baseUrl}/barsell-electrical-og.png`;
 
 export const metadata: Metadata = {
-  title: "About",
+  title: {
+    absolute: ogTitle,
+  },
   description: `Meet ${site.owner}, owner/operator of ${site.name}. ${site.tagline}. California state licensed (${site.license}), bonded, and insured electrician serving ${site.city}.`,
   openGraph: {
     title: ogTitle,

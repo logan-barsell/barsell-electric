@@ -6,7 +6,7 @@ import type { Metadata } from "next";
 const baseUrl =
   process.env.NEXT_PUBLIC_SITE_URL || "https://barsellelectrical.com";
 
-const ogTitle = `${site.name} - Services`;
+const ogTitle = `Services | ${site.name}`;
 const ogDescription = `Professional electrical services including ADUs, remodels, EV chargers, panel upgrades, and more in ${site.city}.`;
 const ogImage = `${baseUrl}/barsell-electrical-og.png`;
 
@@ -49,7 +49,9 @@ const serviceDescriptions: Record<string, string> = {
 // };
 
 export const metadata: Metadata = {
-  title: "Services",
+  title: {
+    absolute: ogTitle,
+  },
   description: `Specializing in residential service & repair, remodels, and new construction. ${services.specialties.slice(0, 5).join(", ")} and more. Licensed, bonded, and insured electrical services in ${site.city}.`,
   openGraph: {
     title: ogTitle,

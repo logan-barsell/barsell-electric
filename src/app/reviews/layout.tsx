@@ -4,12 +4,14 @@ import type { Metadata } from "next";
 const baseUrl =
   process.env.NEXT_PUBLIC_SITE_URL || "https://barsellelectrical.com";
 
-const ogTitle = `${site.name} - Reviews`;
+const ogTitle = `Reviews | ${site.name}`;
 const ogDescription = `Share your experience with ${site.name}. Leave a review on your preferred platform.`;
 const ogImage = `${baseUrl}/barsell-electrical-og.png`;
 
 export const metadata: Metadata = {
-  title: "Reviews",
+  title: {
+    absolute: ogTitle,
+  },
   description: `Leave a review for ${site.name} on Google, Yelp, Nextdoor, Facebook, or Instagram. Your feedback helps us serve the ${site.city} community better.`,
   openGraph: {
     title: ogTitle,

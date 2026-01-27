@@ -9,7 +9,9 @@ const ogDescription = `Get in touch with ${site.name} for your electrical servic
 const ogImage = `${baseUrl}/barsell-electrical-og.png`;
 
 export const metadata: Metadata = {
-  title: "Contact",
+  title: {
+    absolute: ogTitle,
+  },
   description: `Contact ${site.name} for electrical services in ${site.city}. Call ${site.phoneDisplay}, email ${site.email}, or text us. Free estimates available.`,
   openGraph: {
     title: ogTitle,
