@@ -1,0 +1,53 @@
+name: Deploy to DigitalOcean
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: Build and Deploy Static Site
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Build Static Site
+        run: npm run build
+        env:
+          NEXT_PUBLIC_SITE_URL: ${{ secrets.NEXT_PUBLIC_SITE_URL }}
+
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Deploy to Server
+        run: |
+          # Create deployment directory if needed
+          ssh -o StrictHostKeyChecking=no ${{ secrets.USERNAME }}@${{ secrets.HOST }} << 'EOF'
+            sudo mkdir -p ${{ secrets.DEPLOY_PATH }}
+            sudo chown -R ${{ secrets.USERNAME }}:www-data ${{ secrets.DEPLOY_PATH }}
+          EOF
+
+          # Copy built files to server
+          scp -o StrictHostKeyChecking=no -r out/* ${{ secrets.USERNAME }}@${{ secrets.HOST }}:${{ secrets.DEPLOY_PATH }}/
+
+          # Set permissions and reload nginx
+          ssh -o StrictHostKeyChecking=no ${{ secrets.USERNAME }}@${{ secrets.HOST }} << 'EOF'
+            sudo chown -R www-data:www-data ${{ secrets.DEPLOY_PATH }}
+            sudo chmod -R 755 ${{ secrets.DEPLOY_PATH }}
+            sudo systemctl reload nginx
+            echo "✅ Deployment complete!"
+          EOF
