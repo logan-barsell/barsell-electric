@@ -8,20 +8,24 @@ import type { Metadata } from "next";
 const baseUrl =
   process.env.NEXT_PUBLIC_SITE_URL || "https://barsellelectrical.com";
 
+const ogTitle = `Home | ${site.name}`;
+const ogDescription = `Professional electrical services in ${site.city}. Licensed, bonded, and insured.`;
+const ogImage = `${baseUrl}/barsell-electrical-og.png`;
+
 export const metadata: Metadata = {
   title: {
-    absolute: `Home | ${site.name}`,
+    absolute: ogTitle,
   },
   description: `Professional electrical services in ${site.city}. ${site.badges.join(", ")} (${site.license}). Specializing in residential service & repair, remodels, and new construction. Contact us for free estimates.`,
   openGraph: {
     type: "website",
     url: baseUrl,
     siteName: site.name,
-    title: `Home | ${site.name}`,
-    description: `Professional electrical services in ${site.city}. Licensed, bonded, and insured.`,
+    title: ogTitle,
+    description: ogDescription,
     images: [
       {
-        url: `${baseUrl}/og-image.png`,
+        url: ogImage,
         width: 1200,
         height: 630,
         alt: site.name,
@@ -30,9 +34,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: `Home | ${site.name}`,
-    description: `Professional electrical services in ${site.city}. Licensed, bonded, and insured.`,
-    images: [`${baseUrl}/og-image.png`],
+    title: ogTitle,
+    description: ogDescription,
+    images: [ogImage],
   },
 };
 

@@ -58,7 +58,7 @@ export const metadata: Metadata = {
     description: `Professional electrical services in ${site.city}. ${site.badges.join(", ")}. Licensed, bonded, and insured.`,
     images: [
       {
-        url: `${baseUrl}/og-image.png`,
+        url: `${baseUrl}/barsell-electrical-og.jpg`,
         width: 1200,
         height: 630,
         alt: site.name,
@@ -69,7 +69,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: `${site.name} | ${site.tagline}`,
     description: `Professional electrical services in ${site.city}. ${site.badges.join(", ")}. Licensed, bonded, and insured.`,
-    images: [`${baseUrl}/og-image.png`],
+    images: [`${baseUrl}/barsell-electrical-og.png`],
   },
   robots: {
     index: true,
