@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 const baseUrl =
   process.env.NEXT_PUBLIC_SITE_URL || "https://barsellelectrical.com";
 
-const ogTitle = `Contact | ${site.name}`;
+const ogTitle = `${site.name} - Contact`;
 const ogDescription = `Get in touch with ${site.name} for your electrical service needs. Free estimates available.`;
 const ogImage = `${baseUrl}/barsell-electrical-og.png`;
 
