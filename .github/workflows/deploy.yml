@@ -17,7 +17,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "24"
           cache: "npm"
 
       - name: Install Dependencies
@@ -28,10 +28,17 @@ jobs:
         env:
           NEXT_PUBLIC_SITE_URL: ${{ secrets.NEXT_PUBLIC_SITE_URL }}
 
-      - name: Setup SSH
-        uses: webfactory/ssh-agent@v0.9.0
-        with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+      - name: Configure SSH
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        run: |
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+          # Normalize line endings and ensure a trailing newline (avoids libcrypto errors)
+          printf '%s\n' "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keygen -y -f ~/.ssh/deploy_key > /dev/null
+          echo "SSH key OK"
 
       - name: Deploy to Server
         env:
@@ -39,13 +46,14 @@ jobs:
           REMOTE_HOST: ${{ secrets.HOST }}
         run: |
           DEPLOY_PATH="/var/www/barsellelectrical.com/public"
+          SSH_OPTS="-i $HOME/.ssh/deploy_key -o StrictHostKeyChecking=no -o IdentitiesOnly=yes"
 
-          ssh -o StrictHostKeyChecking=no "$REMOTE_USER@$REMOTE_HOST" \
+          ssh $SSH_OPTS "$REMOTE_USER@$REMOTE_HOST" \
             "sudo mkdir -p '$DEPLOY_PATH' && sudo chown -R '$REMOTE_USER':www-data '$DEPLOY_PATH'"
 
           rsync -avz --delete \
-            -e "ssh -o StrictHostKeyChecking=no" \
+            -e "ssh $SSH_OPTS" \
             out/ "$REMOTE_USER@$REMOTE_HOST:$DEPLOY_PATH/"
 
-          ssh -o StrictHostKeyChecking=no "$REMOTE_USER@$REMOTE_HOST" \
+          ssh $SSH_OPTS "$REMOTE_USER@$REMOTE_HOST" \
             "sudo chown -R www-data:www-data '$DEPLOY_PATH' && sudo chmod -R 755 '$DEPLOY_PATH' && sudo systemctl reload nginx"
