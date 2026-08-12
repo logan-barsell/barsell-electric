@@ -34,20 +34,18 @@ jobs:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
       - name: Deploy to Server
+        env:
+          REMOTE_USER: ${{ secrets.USERNAME }}
+          REMOTE_HOST: ${{ secrets.HOST }}
         run: |
-          # Create deployment directory if needed
-          ssh -o StrictHostKeyChecking=no ${{ secrets.USERNAME }}@${{ secrets.HOST }} << 'EOF'
-            sudo mkdir -p ${{ secrets.DEPLOY_PATH }}
-            sudo chown -R ${{ secrets.USERNAME }}:www-data ${{ secrets.DEPLOY_PATH }}
-          EOF
+          DEPLOY_PATH="/var/www/barsellelectrical.com/public"
 
-          # Copy built files to server
-          scp -o StrictHostKeyChecking=no -r out/* ${{ secrets.USERNAME }}@${{ secrets.HOST }}:${{ secrets.DEPLOY_PATH }}/
+          ssh -o StrictHostKeyChecking=no "$REMOTE_USER@$REMOTE_HOST" \
+            "sudo mkdir -p '$DEPLOY_PATH' && sudo chown -R '$REMOTE_USER':www-data '$DEPLOY_PATH'"
 
-          # Set permissions and reload nginx
-          ssh -o StrictHostKeyChecking=no ${{ secrets.USERNAME }}@${{ secrets.HOST }} << 'EOF'
-            sudo chown -R www-data:www-data ${{ secrets.DEPLOY_PATH }}
-            sudo chmod -R 755 ${{ secrets.DEPLOY_PATH }}
-            sudo systemctl reload nginx
-            echo "✅ Deployment complete!"
-          EOF
+          rsync -avz --delete \
+            -e "ssh -o StrictHostKeyChecking=no" \
+            out/ "$REMOTE_USER@$REMOTE_HOST:$DEPLOY_PATH/"
+
+          ssh -o StrictHostKeyChecking=no "$REMOTE_USER@$REMOTE_HOST" \
+            "sudo chown -R www-data:www-data '$DEPLOY_PATH' && sudo chmod -R 755 '$DEPLOY_PATH' && sudo systemctl reload nginx"
